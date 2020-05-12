@@ -1,10 +1,11 @@
 const debug = require('debug')('app:server');
+const config = require('config');
 const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 
-const hostname = process.env.HOSTNAME || 'localhost';
-const port = process.env.PORT || 3000;
+const hostname = config.get('http.hostname');
+const port = config.get('http.port');
 
 const app = express();
 
