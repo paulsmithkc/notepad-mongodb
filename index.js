@@ -4,8 +4,8 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 
-const hostname = config.get('http.hostname');
-const port = config.get('http.port');
+const HOSTNAME = config.get('http.hostname');
+const PORT = config.get('http.port');
 
 const app = express();
 
@@ -23,6 +23,6 @@ app.use((request, response) => {
 });
 
 // Bind the server to an http port
-app.listen(port, hostname, () => {
-  debug(`Server running at http://${hostname}:${port}/`);
+app.listen(PORT, HOSTNAME, () => {
+  debug(`Server running at http://${HOSTNAME}:${PORT}/`);
 });

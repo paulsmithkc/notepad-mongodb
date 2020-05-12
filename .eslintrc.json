@@ -18,6 +18,7 @@
         "linebreak-style": [ "warn", "windows" ],
         "spaced-comment": [ "warn", "always" ],
         "require-jsdoc": [ "warn" ],
-        "object-curly-spacing": [ "warn", "always" ]
+        "object-curly-spacing": [ "warn", "always" ],
+        "no-unused-vars": [ "warn" ]
     }
 }
