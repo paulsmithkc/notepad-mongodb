@@ -1,0 +1,26 @@
+{
+  "files.exclude": {
+    "node_modules/": false,
+    "LICENSE": false,
+    "README.md": false,
+  },
+  "prettier.singleQuote": true,
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.printWidth": 100,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "html.format.wrapLineLength": 100,
+  "html.format.wrapAttributes": "auto",
+  "html.format.indentInnerHtml": false,
+  "html.format.endWithNewline": true,
+  "cSpell.allowCompoundWords": true,
+  "cSpell.words": [
+    "buildpacks",
+    "crossorigin",
+    "esversion"
+  ],
+  //"cSpell.enableFiletypes": [],
+  "eslint.enable": true,
+  "eslint.packageManager": "npm"
+}
