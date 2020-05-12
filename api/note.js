@@ -1,4 +1,4 @@
-const debug = require('debug')('app:api');
+// const debug = require('debug')('app:api');
 const express = require('express');
 const joi = require('@hapi/joi');
 const db = require('../db');
@@ -11,7 +11,7 @@ const NOTE_SCHEMA = joi.object({
 });
 
 // create router
-const router = new express.Router();
+const router = express.Router();
 
 // middleware
 router.use(express.urlencoded({ extended: false }));
@@ -27,10 +27,25 @@ router.get('/', async (request, response, next) => {
   }
 });
 
+// route: get a single note from the database
+router.get('/:id', async (request, response, next) => {
+  try {
+    const id = request.params.id;
+    if (!db.isValidId(id)) {
+      return sendInvalidId(response);
+    }
+
+    const note = await db.findNoteById(id);
+    return response.json(note);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// route: insert a new note into the database
 router.post('/', async (request, response, next) => {
   try {
     const note = request.body;
-    debug(note);
 
     await NOTE_SCHEMA.validateAsync(note);
     await db.insertOneNote(note);
@@ -39,6 +54,49 @@ router.post('/', async (request, response, next) => {
     next(err);
   }
 });
+
+// route: update an existing note in the database
+router.put('/:id', async (request, response, next) => {
+  try {
+    const id = request.params.id;
+    if (!db.isValidId(id)) {
+      return sendInvalidId(response);
+    }
+
+    const note = request.body;
+    note._id = id;
+
+    await NOTE_SCHEMA.validateAsync(note);
+    await db.updateOneNote(note);
+    return response.json(note);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// route: delete an existing note from the database
+router.delete('/:id', async (request, response, next) => {
+  try {
+    const id = request.params.id;
+    if (!db.isValidId(id)) {
+      return sendInvalidId(response);
+    }
+
+    await db.deleteOneNote(id);
+    return response.type('text/plain').send('Note deleted.');
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * Send error message to client, telling it that the supplied ID is invalid.
+ * @param {any} response
+ * @return {any}
+ */
+function sendInvalidId(response) {
+  return response.type('text/plain').status(400).send('id is invalid.');
+}
 
 // export router
 module.exports = router;
