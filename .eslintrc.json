@@ -17,8 +17,10 @@
     "rules": {
         "linebreak-style": [ "warn", "windows" ],
         "spaced-comment": [ "warn", "always" ],
-        "require-jsdoc": [ "warn" ],
         "object-curly-spacing": [ "warn", "always" ],
-        "no-unused-vars": [ "warn" ]
+        "quotes": [ "warn", "single", { "allowTemplateLiterals": true } ],
+        "require-jsdoc": "warn",
+        "no-unused-vars": "warn",
+        "no-trailing-spaces": "warn"
     }
 }

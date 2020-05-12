@@ -8,7 +8,7 @@ const DB_URI = config.get('db.uri');
 /**
  * Note Entity
  */
-export class Note {
+class Note {
   /**
    * Create a new note entity.
    * @param {string} title title text of the note
@@ -32,7 +32,7 @@ let databaseConnection = null;
  * Otherwise, reuse the existing connection.
  * @return {Promise<Db>}
  */
-export async function connect() {
+async function connect() {
   if (!databaseConnection) {
     debug('connecting to database...');
     const client = await MongoClient.connect(DB_URI, {
@@ -49,7 +49,7 @@ export async function connect() {
  * Returns all notes in the database as an array.
  * @return {Promise<Note[]>}
  */
-export async function getAllNotes() {
+async function getAllNotes() {
   const db = await connect();
   const collection = db.collection('notes');
   return collection.find({}).sort({ title: 1 }).toArray();
@@ -60,8 +60,13 @@ export async function getAllNotes() {
  * @param {Note} note entity to be inserted
  * @return {Promise<any>}
  */
-export async function insertOneNote(note) {
+async function insertOneNote(note) {
   const db = await connect();
   const collection = db.collection('notes');
   return collection.insertOne(note);
 }
+
+module.exports.Note = Note;
+module.exports.connect = connect;
+module.exports.getAllNotes = getAllNotes;
+module.exports.insertOneNote = insertOneNote;

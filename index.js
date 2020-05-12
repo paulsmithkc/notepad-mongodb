@@ -4,25 +4,30 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 
-const HOSTNAME = config.get('http.hostname');
-const PORT = config.get('http.port');
+// register joi.objectId
+const joi = require('@hapi/joi');
+joi.objectId = require('joi-objectid')(joi);
 
+// create express app
 const app = express();
 
-// Middleware
+// middleware
 app.use(helmet());
 app.use(express.urlencoded({ extended: false }));
 
-// Routes
+// routes
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, 'public/index.html'));
 });
+app.use('/api/note', require('./api/note'));
 app.use(express.static('public'));
 app.use((request, response) => {
   response.status(404).type('text/plain').send('Page Not Found');
 });
 
-// Bind the server to an http port
-app.listen(PORT, HOSTNAME, () => {
-  debug(`Server running at http://${HOSTNAME}:${PORT}/`);
+// bind the server to an http port
+const hostname = config.get('http.hostname');
+const port = config.get('http.port');
+app.listen(port, hostname, () => {
+  debug(`Server running at http://${hostname}:${port}/`);
 });

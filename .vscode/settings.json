@@ -18,7 +18,8 @@
   "cSpell.words": [
     "buildpacks",
     "crossorigin",
-    "esversion"
+    "esversion",
+    "objectid"
   ],
   //"cSpell.enableFiletypes": [],
   "eslint.enable": true,
