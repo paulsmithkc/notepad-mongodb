@@ -33,7 +33,7 @@ router.post('/', async (request, response, next) => {
     debug(note);
 
     await NOTE_SCHEMA.validateAsync(note);
-    await db.insertOneRecipe(note);
+    await db.insertOneNote(note);
     return response.json(note);
   } catch (err) {
     next(err);

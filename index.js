@@ -4,7 +4,7 @@ const express = require('express');
 const helmet = require('helmet');
 const path = require('path');
 
-// register joi.objectId
+// inject joi-objectid
 const joi = require('@hapi/joi');
 joi.objectId = require('joi-objectid')(joi);
 
