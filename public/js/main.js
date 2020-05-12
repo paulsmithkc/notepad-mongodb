@@ -79,9 +79,16 @@ function buildNoteCard(note) {
 
   noteCard.find('.Note-delete-btn').click((e) => {
     console.log('delete clicked');
-    const note = $(e.target).parents('.Note');
-    const id = note.data('id');
-    deleteNote(id);
+    // const note = $(e.target).parents('.Note');
+    // const id = note.data('id');
+    deleteNote(note._id);
+  });
+  noteCard.find('.Note-edit-btn').click((e) => {
+    console.log('edit clicked');
+    // const note = $(e.target).parents('.Note');
+    // const id = note.data('id');
+    // FIXME: implement edit
+    alert('EDIT ' + note._id);
   });
 
   return noteCard;
