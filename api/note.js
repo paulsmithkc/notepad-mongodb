@@ -46,6 +46,7 @@ router.get('/:id', async (request, response, next) => {
 router.post('/', async (request, response, next) => {
   try {
     const note = request.body;
+    note._id = db.newId();
 
     await NOTE_SCHEMA.validateAsync(note);
     await db.insertOneNote(note);

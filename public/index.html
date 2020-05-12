@@ -23,10 +23,22 @@
 <body>
 
   <main class="container mt-3 mb-3">
-    <h1>
-      <i class="fa-fw fas fa-clipboard"></i>
-      Notepad w/ MongoDB
-    </h1>
+    <div class="d-flex flex-wrap align-items-center">
+      <h1 class="flex-grow-1 m-3">
+        <i class="fa-fw fas fa-clipboard"></i>
+        Notepad w/ MongoDB
+      </h1>
+      <div>
+        <button type="button" class="Note-refresh-btn btn btn-outline-primary" title="Refresh">
+          <i class="fa-fw fas fa-sync-alt"></i>
+          Refresh
+        </button>
+        <button type="button" class="Note-add-btn btn btn-outline-primary" title="Add Note">
+          <i class="fa-fw fas fa-plus-circle"></i>
+          Add Note
+        </button>
+      </div>
+    </div>
     <hr>
     </hr>
     <div id="Note-container" class="row">

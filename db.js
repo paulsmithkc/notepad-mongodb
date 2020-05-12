@@ -15,6 +15,7 @@ class Note {
    * @param {string} body body text of the note
    */
   constructor(title, body) {
+    this._id = new ObjectId().toString();
     this.title = title;
     this.body = body;
   }
@@ -112,6 +113,14 @@ function isValidId(id) {
   return ObjectId.isValid(id);
 }
 
+/**
+ * Generate a new ObjectId.
+ * @return {ObjectId}
+ */
+function newId() {
+  return new ObjectId().toString();
+}
+
 module.exports.Note = Note;
 module.exports.connect = connect;
 module.exports.getAllNotes = getAllNotes;
@@ -120,3 +129,4 @@ module.exports.insertOneNote = insertOneNote;
 module.exports.updateOneNote = updateOneNote;
 module.exports.deleteOneNote = deleteOneNote;
 module.exports.isValidId = isValidId;
+module.exports.newId = newId;
