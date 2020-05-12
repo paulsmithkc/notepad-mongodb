@@ -19,6 +19,7 @@
         "spaced-comment": [ "warn", "always" ],
         "object-curly-spacing": [ "warn", "always" ],
         "quotes": [ "warn", "single", { "allowTemplateLiterals": true } ],
+        "operator-linebreak": [ "warn", "before" ],
         "require-jsdoc": "warn",
         "no-unused-vars": "warn",
         "no-trailing-spaces": "warn"

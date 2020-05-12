@@ -24,6 +24,7 @@ app.use(express.static('public'));
 app.use((request, response) => {
   response.status(404).type('text/plain').send('Page Not Found');
 });
+app.use(require('./middleware/error'));
 
 // bind the server to an http port
 const hostname = config.get('http.hostname');
