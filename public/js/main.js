@@ -136,8 +136,7 @@ function buildNoteCard(note) {
   });
   noteCard.find('.Note-edit-btn').click((e) => {
     console.log('edit clicked');
-    noteContainer.prepend(buildNoteForm(note));
-    noteCard.remove();
+    noteCard.replaceWith(buildNoteForm(note));
   });
 
   return noteCard;
@@ -188,9 +187,10 @@ function buildNoteForm(note) {
   noteForm.find('.Note-cancel-btn').click((e) => {
     console.log('cancel clicked');
     if (id) {
-      noteContainer.prepend(buildNoteCard(note));
+      noteForm.replaceWith(buildNoteCard(note));
+    } else {
+      noteForm.remove();
     }
-    noteForm.remove();
   });
   noteForm.submit((e) => {
     e.preventDefault();
@@ -201,8 +201,7 @@ function buildNoteForm(note) {
       : $.ajax({ url: '/api/note/', method: 'POST', data: formData });
     request
       .done((data) => {
-        noteContainer.prepend(buildNoteCard(data));
-        noteForm.remove();
+        noteForm.replaceWith(buildNoteCard(data));
         console.log('Note saved.');
       })
       .fail((err) => {
