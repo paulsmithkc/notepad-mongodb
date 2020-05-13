@@ -52,8 +52,7 @@ async function connect() {
  */
 async function getAllNotes() {
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.find({}).sort({ title: 1 }).toArray();
+  return db.collection('notes').find({}).sort({ title: 1 }).toArray();
 }
 
 /**
@@ -64,8 +63,7 @@ async function getAllNotes() {
 async function findNoteById(id) {
   id = new ObjectId(id);
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.findOne({ _id: id });
+  return db.collection('notes').findOne({ _id: id });
 }
 
 /**
@@ -76,8 +74,7 @@ async function findNoteById(id) {
 async function insertOneNote(note) {
   delete note._id;
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.insertOne(note);
+  return db.collection('notes').insertOne(note);
 }
 
 /**
@@ -88,8 +85,9 @@ async function insertOneNote(note) {
 async function updateOneNote(note) {
   note._id = new ObjectId(note._id);
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.updateOne({ _id: note._id }, { $set: { title: note.title, body: note.body } });
+  return db
+    .collection('notes')
+    .updateOne({ _id: note._id }, { $set: { title: note.title, body: note.body } });
 }
 
 /**
@@ -100,18 +98,17 @@ async function updateOneNote(note) {
 async function deleteOneNote(id) {
   id = new ObjectId(id);
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.deleteOne({ _id: id });
+  return db.collection('notes').deleteOne({ _id: id });
 }
 
 /**
  * Delete all notes from the database.
  * (This is permanent, use with caution.)
+ * @return {Promise<any>}
  */
 async function deleteAllNotes() {
   const db = await connect();
-  const collection = db.collection('notes');
-  return collection.deleteMany({});
+  return db.collection('notes').deleteMany({});
 }
 
 /**
