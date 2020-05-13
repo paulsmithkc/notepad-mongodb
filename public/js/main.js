@@ -152,10 +152,10 @@ function buildNoteForm(note) {
   const id = note._id || '';
 
   const noteForm = $(
-    `<form class="Note Note-form col-12" method="POST" action="/api/note" data-id="${id}">
+    `<form class="Note Note-form col-sm-6 col-md-4" method="POST" action="/api/note" data-id="${id}">
       <div class="card mb-3">
         <div class="card-header d-flex flex-wrap align-items-center">
-          <h3 class="Note-title card-title flex-grow-1 m-1">New Note</h3>
+          <h3 class="Note-title card-title flex-grow-1 m-1">${id ? 'Edit Note' : 'Add Note'}</h3>
           <div>
             <button type="submit" class="Note-save-btn btn btn-outline-primary m-1 px-2 py-1" title="Save">
               <i class="fa-fw fas fa-save"></i>
