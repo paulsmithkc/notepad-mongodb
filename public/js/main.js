@@ -54,8 +54,10 @@ function deleteNote(id) {
  * @return {any} note element
  */
 function buildNoteCard(note) {
+  const id = note._id || '';
+
   const noteCard = $(
-    `<div class="Note col-sm-6 col-md-4" data-id="${note._id || ''}">
+    `<div class="Note col-sm-6 col-md-4" data-id="${id}">
       <div class="card mb-3">
         <div class="card-header d-flex flex-wrap align-items-center">
           <h3 class="Note-title card-title flex-grow-1 m-1">${note.title || ''}</h3>
@@ -79,16 +81,12 @@ function buildNoteCard(note) {
 
   noteCard.find('.Note-delete-btn').click((e) => {
     console.log('delete clicked');
-    // const note = $(e.target).parents('.Note');
-    // const id = note.data('id');
-    deleteNote(note._id);
+    deleteNote(id);
   });
   noteCard.find('.Note-edit-btn').click((e) => {
     console.log('edit clicked');
-    // const note = $(e.target).parents('.Note');
-    // const id = note.data('id');
-    // FIXME: implement edit
-    alert('EDIT ' + note._id);
+    noteContainer.prepend(buildNoteForm(note));
+    noteCard.remove();
   });
 
   return noteCard;
@@ -100,8 +98,10 @@ function buildNoteCard(note) {
  * @return {any} note element
  */
 function buildNoteForm(note) {
+  const id = note._id || '';
+
   const noteForm = $(
-    `<form class="Note Note-form col-12" method="POST" action="/api/note">
+    `<form class="Note Note-form col-12" method="POST" action="/api/note" data-id="${id}">
       <div class="card mb-3">
         <div class="card-header d-flex flex-wrap align-items-center">
           <h3 class="Note-title card-title flex-grow-1 m-1">New Note</h3>
@@ -117,7 +117,7 @@ function buildNoteForm(note) {
           </div>
         </div>
         <div class="Note-body card-body">
-          <input type="hidden" name="_id" value="${note._id || ''}" />
+          <input type="hidden" name="_id" value="${id}" />
           <div class="form-group">
             <label for="Note-title">Title</label>
             <input class="form-control" type="text" id="Note-title" name="title" value="${note.title || ''}" />
@@ -134,15 +134,22 @@ function buildNoteForm(note) {
 
   noteForm.find('.Note-cancel-btn').click((e) => {
     console.log('cancel clicked');
+    if (id) {
+      noteContainer.prepend(buildNoteCard(note));
+    }
     noteForm.remove();
   });
   noteForm.submit((e) => {
     e.preventDefault();
     console.log('save clicked');
-    $.post('/api/note', noteForm.serialize())
+    const formData = noteForm.serialize();
+    const request = id
+      ? $.ajax({ url: '/api/note/' + id, method: 'PUT', data: formData })
+      : $.ajax({ url: '/api/note/', method: 'POST', data: formData });
+    request
       .done((data) => {
-        noteForm.remove();
         noteContainer.prepend(buildNoteCard(data));
+        noteForm.remove();
         console.log('Note saved.');
       })
       .fail((err) => {
