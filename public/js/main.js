@@ -15,6 +15,11 @@ $('.Note-add-btn').click((e) => {
   }
 });
 
+$('.Note-delete-all-btn').click((e) => {
+  console.log('delete all clicked');
+  deleteAllNotes();
+});
+
 /**
  * Get all of the notes from the database and display them.
  */
@@ -29,6 +34,21 @@ function getAllNotes() {
       noteContainer.html(
         `<h4 class="text-danger">Failed to load notes from database:<br/>${err.responseText}</h4>`
       );
+    });
+}
+
+/**
+ * Delete all notes from the database.
+ */
+function deleteAllNotes() {
+  $.ajax({ url: '/api/note/all', method: 'DELETE' })
+    .done((data) => {
+      noteContainer.html('');
+      console.log('All notes deleted.');
+    })
+    .fail((err) => {
+      console.error(err);
+      alert(err);
     });
 }
 

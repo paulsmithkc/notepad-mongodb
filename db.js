@@ -105,6 +105,16 @@ async function deleteOneNote(id) {
 }
 
 /**
+ * Delete all notes from the database.
+ * (This is permanent, use with caution.)
+ */
+async function deleteAllNotes() {
+  const db = await connect();
+  const collection = db.collection('notes');
+  return collection.deleteMany({});
+}
+
+/**
  * Checks if a value is a valid ObjectId.
  * @param {string|ObjectId} id the id to validate
  * @return {boolean} return true if the value is a valid ObjectId, return false otherwise.
@@ -128,5 +138,6 @@ module.exports.findNoteById = findNoteById;
 module.exports.insertOneNote = insertOneNote;
 module.exports.updateOneNote = updateOneNote;
 module.exports.deleteOneNote = deleteOneNote;
+module.exports.deleteAllNotes = deleteAllNotes;
 module.exports.isValidId = isValidId;
 module.exports.newId = newId;

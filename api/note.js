@@ -18,6 +18,7 @@ router.use(express.urlencoded({ extended: false }));
 router.use(express.json());
 
 // route: get all notes from the database
+// NOTE: the order/precedence of this route matters.
 router.get('/', async (request, response, next) => {
   try {
     const notes = await db.getAllNotes();
@@ -70,6 +71,17 @@ router.put('/:id', async (request, response, next) => {
     await NOTE_SCHEMA.validateAsync(note);
     await db.updateOneNote(note);
     return response.json(note);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// route: delete all notes from the database
+// NOTE: the order/precedence of this route matters.
+router.delete('/all', async (request, response, next) => {
+  try {
+    await db.deleteAllNotes();
+    return response.type('text/plain').send('All notes deleted.');
   } catch (err) {
     next(err);
   }
