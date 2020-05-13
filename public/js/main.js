@@ -17,7 +17,23 @@ $('.Note-add-btn').click((e) => {
 
 $('.Note-delete-all-btn').click((e) => {
   console.log('delete all clicked');
-  deleteAllNotes();
+  bootbox.confirm({
+    title: 'Warning',
+    message:
+      '<h5>Are you sure that you want to delete <u>all</u> notes?</h5><h6>(This is permanent.)</h6>',
+    buttons: {
+      confirm: { label: 'Yes, delete everything', className: 'btn-danger' },
+      cancel: { label: 'Cancel', className: 'btn-outline-dark' },
+    },
+    closeButton: true,
+    onEscape: true,
+    backdrop: true,
+    callback: (result) => {
+      if (result) {
+        deleteAllNotes();
+      }
+    },
+  });
 });
 
 /**
@@ -101,7 +117,22 @@ function buildNoteCard(note) {
 
   noteCard.find('.Note-delete-btn').click((e) => {
     console.log('delete clicked');
-    deleteNote(id);
+    bootbox.confirm({
+      title: 'Warning',
+      message: 'Are you sure that you want to this note?',
+      buttons: {
+        confirm: { label: 'Yes, delete it', className: 'btn-danger' },
+        cancel: { label: 'Cancel', className: 'btn-outline-dark' },
+      },
+      closeButton: true,
+      onEscape: true,
+      backdrop: true,
+      callback: (result) => {
+        if (result) {
+          deleteNote(id);
+        }
+      },
+    });
   });
   noteCard.find('.Note-edit-btn').click((e) => {
     console.log('edit clicked');
@@ -140,11 +171,13 @@ function buildNoteForm(note) {
           <input type="hidden" name="_id" value="${id}" />
           <div class="form-group">
             <label for="Note-title">Title</label>
-            <input class="form-control" type="text" id="Note-title" name="title" value="${note.title || ''}" />
+            <input class="form-control" 
+                   type="text" id="Note-title" name="title" value="${note.title || ''}" />
           </div>
           <div class="form-group">
             <label for="Note-body">Body</label>
-            <textarea class="form-control" rows="7" id="Note-body" name="body">${note.body || ''}</textarea>
+            <textarea class="form-control" 
+                      rows="7" id="Note-body" name="body">${note.body || ''}</textarea>
           </div>
           <output class="Note-output"></output>
         </div>
