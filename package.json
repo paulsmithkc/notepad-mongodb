@@ -20,7 +20,7 @@
     }
   ],
   "engines": {
-    "node": "10.16.0"
+    "node": "12.16.3"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
