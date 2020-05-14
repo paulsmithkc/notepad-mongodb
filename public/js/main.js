@@ -9,9 +9,9 @@ $('.Note-refresh-btn').click((e) => {
 $('.Note-add-btn').click((e) => {
   console.log('add clicked');
   if (noteContainer.find('.Note-new').length == 0) {
-    const noteForm = buildNoteForm({});
-    noteForm.addClass('Note-new');
-    noteContainer.prepend(noteForm);
+    const noteEditor = buildNoteEditor({});
+    noteEditor.addClass('Note-new');
+    noteContainer.prepend(noteEditor);
   }
 });
 
@@ -43,7 +43,7 @@ function getAllNotes() {
   $.get('/api/note')
     .done((data) => {
       noteContainer.html('');
-      data.forEach((note) => noteContainer.append(buildNoteCard(note)));
+      data.forEach((note) => noteContainer.append(buildNoteViewer(note)));
     })
     .fail((err) => {
       console.error(err);
@@ -85,14 +85,14 @@ function deleteNote(id) {
 }
 
 /**
- * Create a new note element.
+ * Create a note viewer element.
  * @param {any} note note object
- * @return {any} note element
+ * @return {any} viewer element
  */
-function buildNoteCard(note) {
+function buildNoteViewer(note) {
   const id = note._id || '';
 
-  const noteCard = $(
+  const noteViewer = $(
     `<div class="Note col-sm-6 col-md-4" data-id="${id}">
       <div class="card mb-3">
         <div class="card-header d-flex flex-wrap align-items-center">
@@ -115,7 +115,7 @@ function buildNoteCard(note) {
     </div>`
   );
 
-  noteCard.find('.Note-delete-btn').click((e) => {
+  noteViewer.find('.Note-delete-btn').click((e) => {
     console.log('delete clicked');
     bootbox.confirm({
       title: 'Warning',
@@ -134,23 +134,23 @@ function buildNoteCard(note) {
       },
     });
   });
-  noteCard.find('.Note-edit-btn').click((e) => {
+  noteViewer.find('.Note-edit-btn').click((e) => {
     console.log('edit clicked');
-    noteCard.replaceWith(buildNoteForm(note));
+    noteViewer.replaceWith(buildNoteEditor(note));
   });
 
-  return noteCard;
+  return noteViewer;
 }
 
 /**
- * Create a new note element.
+ * Create a note editor element.
  * @param {any} note note object
- * @return {any} note element
+ * @return {any} editor element
  */
-function buildNoteForm(note) {
+function buildNoteEditor(note) {
   const id = note._id || '';
 
-  const noteForm = $(
+  const noteEditor = $(
     `<form class="Note Note-form col-sm-6 col-md-4" method="POST" action="/api/note" data-id="${id}">
       <div class="card mb-3">
         <div class="card-header d-flex flex-wrap align-items-center">
@@ -184,31 +184,31 @@ function buildNoteForm(note) {
     </form>`
   );
 
-  noteForm.find('.Note-cancel-btn').click((e) => {
+  noteEditor.find('.Note-cancel-btn').click((e) => {
     console.log('cancel clicked');
     if (id) {
-      noteForm.replaceWith(buildNoteCard(note));
+      noteEditor.replaceWith(buildNoteViewer(note));
     } else {
-      noteForm.remove();
+      noteEditor.remove();
     }
   });
-  noteForm.submit((e) => {
+  noteEditor.submit((e) => {
     e.preventDefault();
     console.log('save clicked');
-    const formData = noteForm.serialize();
+    const formData = noteEditor.serialize();
     const request = id
       ? $.ajax({ url: '/api/note/' + id, method: 'PUT', data: formData })
       : $.ajax({ url: '/api/note/', method: 'POST', data: formData });
     request
       .done((data) => {
-        noteForm.replaceWith(buildNoteCard(data));
+        noteEditor.replaceWith(buildNoteViewer(data));
         console.log('Note saved.');
       })
       .fail((err) => {
         console.error(err);
-        noteForm.find('.Note-output').html(`<h6 class="text-danger">${err.responseText}</h6>`);
+        noteEditor.find('.Note-output').html(`<h6 class="text-danger">${err.responseText}</h6>`);
       });
   });
 
-  return noteForm;
+  return noteEditor;
 }
