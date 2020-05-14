@@ -20,13 +20,7 @@
     }
   ],
   "engines": {
-    "node": "12.16.3"
-  },
-  "env": {
-    "DEBUG": {
-      "description": "Which debug channels should be monitored?",
-      "value": "app:*"
-    }
+    "node": "10.16.0"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
