@@ -26,7 +26,9 @@
         "require-jsdoc": "warn",
         "no-unused-vars": "warn",
         "no-trailing-spaces": "warn",
+        "arrow-parens": "warn",
         "new-cap": "off",
-        "comma-dangle": "off"
+        "comma-dangle": "off",
+        "space-before-function-paren": "off"
     }
 }
