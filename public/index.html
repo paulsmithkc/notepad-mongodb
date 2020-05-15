@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Notepad w/ MongoDB</title>
+  <title>Notepad w/ MongoDB &amp; jQuery</title>
   <link rel="stylesheet" href="css/themes/lux.bootstrap.min.css" />
   <link rel="stylesheet" href="css/main.css" />
 
@@ -28,26 +28,24 @@
 <body>
 
   <main class="container mt-3 mb-3">
+    <h1 class="m-3">
+      <i class="fa-fw fas fa-clipboard"></i>
+      Notepad w/ MongoDB &amp; jQuery
+    </h1>
     <div class="d-flex flex-wrap align-items-center">
-      <h1 class="flex-grow-1 m-3">
-        <i class="fa-fw fas fa-clipboard"></i>
-        Notepad w/ MongoDB
-      </h1>
-      <div>
-        <button type="button" class="Note-refresh-btn btn btn-outline-primary mx-1" title="Refresh">
-          <i class="fa-fw fas fa-sync-alt"></i>
-          Refresh
-        </button>
-        <button type="button" class="Note-add-btn btn btn-outline-primary mx-1" title="Add Note">
-          <i class="fa-fw fas fa-plus-circle"></i>
-          Add Note
-        </button>
-        <button type="button" class="Note-delete-all-btn btn btn-outline-primary mx-1"
-          title="Delete All Notes">
-          <i class="fa-fw fas fa-trash"></i>
-          Delete All Notes
-        </button>
-      </div>
+      <button type="button" class="Note-refresh-btn btn btn-outline-primary m-1" title="Refresh">
+        <i class="fa-fw fas fa-sync-alt"></i>
+        Refresh
+      </button>
+      <button type="button" class="Note-add-btn btn btn-outline-primary m-1" title="Add Note">
+        <i class="fa-fw fas fa-plus-circle"></i>
+        Add Note
+      </button>
+      <button type="button" class="Note-delete-all-btn btn btn-outline-primary m-1"
+        title="Delete All Notes">
+        <i class="fa-fw fas fa-trash"></i>
+        Delete All Notes
+      </button>
     </div>
     <hr>
     </hr>
