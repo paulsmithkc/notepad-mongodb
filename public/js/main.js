@@ -20,7 +20,7 @@ $('.Note-delete-all-btn').click((e) => {
   bootbox.confirm({
     title: 'Warning',
     message:
-      '<h5>Are you sure that you want to delete <u>all</u> notes?</h5><h6>(This is permanent.)</h6>',
+      '<h5>Are you sure that you want to delete <u>ALL</u> notes?</h5><h6>(This is permanent.)</h6>',
     buttons: {
       confirm: { label: 'Yes, delete everything', className: 'btn-danger' },
       cancel: { label: 'Cancel', className: 'btn-outline-dark' },
